@@ -58,7 +58,10 @@ class App extends Component {
   };
 
   render() {
-    const filteredList = this.filterContactsOnChange();
+    const filteredList = this.filterContactsOnChange().sort(
+      (firstContactName, secondContactName) =>
+        firstContactName.name.localeCompare(secondContactName.name)
+    );
 
     return (
       <>
