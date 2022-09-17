@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
+import { Global } from '@emotion/react';
+import { GlobalStyles } from './GlobalStyles.styled';
+import { Container } from './Container.styled';
 import ContactForm from 'components/ContactForm';
 import Filter from 'components/Filter';
 import ContactList from 'components/ContactList';
@@ -42,30 +45,37 @@ class App extends Component {
 
   filterInputHandler = event => {
     this.setState({
-      filter: event.currentTarget.value.toLowerCase(),
+      filter: event.currentTarget.value,
     });
   };
 
   filterContactsOnChange = () => {
     const { contacts, filter } = this.state;
-    return contacts.filter(contact => contact.name.includes(filter));
+    const capitalFilter = filter.toUpperCase();
+    return contacts.filter(contact =>
+      contact.name.toUpperCase().includes(capitalFilter)
+    );
   };
 
   render() {
     const filteredList = this.filterContactsOnChange();
 
     return (
-      <div>
-        <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.addContact} />
-
-        <h2>Contacts</h2>
-        <Filter value={this.filter} onChange={this.filterInputHandler} />
-        <ContactList
-          contacts={filteredList}
-          deleteOnClick={this.deleteContact}
-        />
-      </div>
+      <>
+        <Global styles={GlobalStyles} />
+        <section>
+          <Container>
+            <h1>Phonebook</h1>
+            <ContactForm onSubmit={this.addContact} />
+            <h2>Contacts</h2>
+            <Filter value={this.filter} onChange={this.filterInputHandler} />
+            <ContactList
+              contacts={filteredList}
+              deleteOnClick={this.deleteContact}
+            />
+          </Container>
+        </section>
+      </>
     );
   }
 }
