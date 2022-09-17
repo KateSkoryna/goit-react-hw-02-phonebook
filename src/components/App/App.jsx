@@ -57,11 +57,15 @@ class App extends Component {
     );
   };
 
-  render() {
-    const filteredList = this.filterContactsOnChange().sort(
+  sortContactList = () => {
+    return this.filterContactsOnChange().sort(
       (firstContactName, secondContactName) =>
         firstContactName.name.localeCompare(secondContactName.name)
     );
+  };
+
+  render() {
+    const filteredList = this.sortContactList();
 
     return (
       <>
