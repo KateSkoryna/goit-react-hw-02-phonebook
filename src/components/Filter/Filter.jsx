@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types';
 import { FilterTitle, FilterInput } from './Filter.styled';
 
-const Filter = ({ value, onChange }) => {
+const Filter = ({ onChange }) => {
   return (
     <div>
       <FilterTitle>Find contacts by name</FilterTitle>
       <FilterInput
         type="text"
         name="filter"
-        value={value}
         onChange={onChange}
         title="Search field"
         required
