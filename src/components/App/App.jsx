@@ -87,6 +87,14 @@ class App extends Component {
   }
 }
 
+ContactForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
+
+Filter.propTypes = {
+  onChange: PropTypes.func.isRequired,
+};
+
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(PropTypes.shape).isRequired,
   deleteOnClick: PropTypes.func.isRequired,
