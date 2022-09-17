@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import ContactForm from 'components/ContactForm';
 import Filter from 'components/Filter';
@@ -15,13 +16,7 @@ class App extends Component {
     filter: '',
   };
 
-  deleteContactHandler = id => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== id),
-    }));
-  };
-
-  formSubmithandler = ({ name, number }) => {
+  addContact = ({ name, number }) => {
     const newContact = {
       id: nanoid(),
       name,
@@ -30,29 +25,54 @@ class App extends Component {
 
     const { contacts } = this.state;
 
-    contacts.find(contact => newContact.name === contact.name)
+    contacts.find(
+      contact => newContact.name.toLowerCase() === contact.name.toLowerCase()
+    )
       ? alert(`${newContact.name} is already in contacts.`)
       : this.setState(({ contacts }) => ({
           contacts: [newContact, ...contacts],
         }));
   };
 
+  deleteContact = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+  };
+
+  filterInputHandler = event => {
+    this.setState({
+      filter: event.currentTarget.value.toLowerCase(),
+    });
+  };
+
+  filterContactsOnChange = () => {
+    const { contacts, filter } = this.state;
+    return contacts.filter(contact => contact.name.includes(filter));
+  };
+
   render() {
-    console.log(this.state);
+    const filteredList = this.filterContactsOnChange();
+
     return (
       <div>
         <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.formSubmithandler} />
+        <ContactForm onSubmit={this.addContact} />
 
         <h2>Contacts</h2>
-        <Filter />
+        <Filter value={this.filter} onChange={this.filterInputHandler} />
         <ContactList
-          contacts={this.state.contacts}
-          deleteOnClick={this.deleteContactHandler}
+          contacts={filteredList}
+          deleteOnClick={this.deleteContact}
         />
       </div>
     );
   }
 }
+
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  deleteOnClick: PropTypes.func.isRequired,
+};
 
 export default App;

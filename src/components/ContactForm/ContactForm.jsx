@@ -8,6 +8,10 @@ class ContactForm extends Component {
     number: '',
   };
 
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  };
+
   inputNameId = nanoid();
   inputTelId = nanoid();
 
@@ -19,6 +23,7 @@ class ContactForm extends Component {
   handleOnSubmit = event => {
     event.preventDefault();
     this.props.onSubmit(this.state);
+    this.reset();
   };
 
   reset = () => {
