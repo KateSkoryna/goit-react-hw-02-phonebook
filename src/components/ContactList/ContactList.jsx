@@ -28,11 +28,13 @@ const ContactList = ({ contacts, deleteOnClick }) => {
 };
 
 ContactList.propTypes = {
-  contacts: PropTypes.arrayOf({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    number: PropTypes.number.isRequired,
-  }),
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ),
   deleteOnClick: PropTypes.func.isRequired,
 };
 
