@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
+import PropTypes from 'prop-types';
 import { Global } from '@emotion/react';
 import { GlobalStyles } from './GlobalStyles.styled';
 import { Container } from './Container.styled';
@@ -16,7 +16,7 @@ class App extends Component {
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
-    filter: '',
+    filter: 'mama',
   };
 
   addContact = ({ name, number }) => {
@@ -75,7 +75,10 @@ class App extends Component {
             <h1>Phonebook</h1>
             <ContactForm onSubmit={this.addContact} />
             <h2>Contacts</h2>
-            <Filter onChange={this.filterInputHandler} />
+            <Filter
+              value={this.state.filter}
+              onChange={this.filterInputHandler}
+            />
             <ContactList
               contacts={filteredList}
               deleteOnClick={this.deleteContact}
@@ -86,14 +89,6 @@ class App extends Component {
     );
   }
 }
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
-
-Filter.propTypes = {
-  onChange: PropTypes.func.isRequired,
-};
 
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(PropTypes.shape).isRequired,
